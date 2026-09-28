@@ -21,13 +21,11 @@ namespace LibraryApp
                 Console.WriteLine("2. View All Books");
                 Console.WriteLine("3. Add Member");
                 Console.WriteLine("4. View All Members");
-                Console.WriteLine("5. Issue Book");
-                Console.WriteLine("6. Return Book");
-                Console.WriteLine("7. Export Books JSON");
-                Console.WriteLine("8. Import Books JSON");
-                Console.WriteLine("9. Update Stock");
-                Console.WriteLine("10. Delete Book");
-                Console.WriteLine("11. Exit");
+                Console.WriteLine("5. Issue Book to Member (Transaction)");
+                Console.WriteLine("6. Return Book (Transaction)");
+                Console.WriteLine("7. Export Books to JSON");
+                Console.WriteLine("8. Import Books from JSON");
+                Console.WriteLine("9. Exit");
                 Console.Write("Choice: ");
 
                 string choice = Console.ReadLine();
@@ -89,12 +87,10 @@ namespace LibraryApp
                 }
                 else if (choice == "6")
                 {
-                    Console.Write("Book ID: ");
-                    int bId = Convert.ToInt32(Console.ReadLine());
-                    Console.Write("Member ID: ");
-                    int mId = Convert.ToInt32(Console.ReadLine());
+                    Console.Write("Issue ID: ");
+                    int iId = Convert.ToInt32(Console.ReadLine());
 
-                    bool ok = ls.ReturnBook(bId, mId);
+                    bool ok = ls.ReturnBook(iId);
                     if (ok) Console.WriteLine("Returned.");
                     else Console.WriteLine("Error.");
                 }
@@ -117,24 +113,6 @@ namespace LibraryApp
                     }
                 }
                 else if (choice == "9")
-                {
-                    Console.Write("Book ID: ");
-                    int id = Convert.ToInt32(Console.ReadLine());
-                    Console.Write("New Stock: ");
-                    int s = Convert.ToInt32(Console.ReadLine());
-
-                    br.UpdateBookStock(id, s);
-                    Console.WriteLine("Done.");
-                }
-                else if (choice == "10")
-                {
-                    Console.Write("Book ID: ");
-                    int id = Convert.ToInt32(Console.ReadLine());
-
-                    br.DeleteBook(id);
-                    Console.WriteLine("Done.");
-                }
-                else if (choice == "11")
                 {
                     break;
                 }

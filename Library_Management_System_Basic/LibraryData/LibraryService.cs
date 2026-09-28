@@ -22,7 +22,7 @@ namespace LibraryData
             SqlCommand cmd1 = new SqlCommand(q1, con, t);
             cmd1.Parameters.AddWithValue("@mId", mId);
 
-            string q2 = "SELECT stock FROM Books WHERE BookId = @bId";
+            string q2 = "SELECT Stock FROM Books WHERE BookId = @bId";
             SqlCommand cmd2 = new SqlCommand(q2, con, t);
             cmd2.Parameters.AddWithValue("@bId", bId);
 
@@ -42,7 +42,7 @@ namespace LibraryData
                 if (count == 0) throw new Exception("no member");
 
                 object stock = cmd2.ExecuteScalar();
-                if (stock == null || Convert.ToInt32(stock) == 0) throw new Exception("no stock");
+                if (stock == null || Convert.ToInt32(stock) <= 0) throw new Exception("no stock");
 
                 cmd3.ExecuteNonQuery();
                 cmd4.ExecuteNonQuery();
@@ -60,31 +60,31 @@ namespace LibraryData
             return true;
         }
 
-        public bool ReturnBook(int bId, int mId)
+        public bool ReturnBook(int issueId)
         {
             SqlConnection con = new SqlConnection(connStr);
             con.Open();
             SqlTransaction t = con.BeginTransaction();
 
-            string q1 = "SELECT COUNT(*) FROM IssuedBooks WHERE BookId = @bId AND MemberId = @mId AND ReturnDate IS NULL";
+            string q1 = "SELECT BookId FROM IssuedBooks WHERE IssueId = @iId AND ReturnDate IS NULL";
             SqlCommand cmd1 = new SqlCommand(q1, con, t);
-            cmd1.Parameters.AddWithValue("@bId", bId);
-            cmd1.Parameters.AddWithValue("@mId", mId);
+            cmd1.Parameters.AddWithValue("@iId", issueId);
 
-            string q2 = "UPDATE IssuedBooks SET ReturnDate = @d WHERE BookId = @bId AND MemberId = @mId AND ReturnDate IS NULL";
+            string q2 = "UPDATE IssuedBooks SET ReturnDate = @d WHERE IssueId = @iId AND ReturnDate IS NULL";
             SqlCommand cmd2 = new SqlCommand(q2, con, t);
             cmd2.Parameters.AddWithValue("@d", DateTime.Now);
-            cmd2.Parameters.AddWithValue("@bId", bId);
-            cmd2.Parameters.AddWithValue("@mId", mId);
+            cmd2.Parameters.AddWithValue("@iId", issueId);
 
             string q3 = "UPDATE Books SET Stock = Stock + 1 WHERE BookId = @bId";
             SqlCommand cmd3 = new SqlCommand(q3, con, t);
-            cmd3.Parameters.AddWithValue("@bId", bId);
 
             try
             {
-                int count = (int)cmd1.ExecuteScalar();
-                if (count == 0) throw new Exception("no record");
+                object bObj = cmd1.ExecuteScalar();
+                if (bObj == null) throw new Exception("no record");
+
+                int bId = Convert.ToInt32(bObj);
+                cmd3.Parameters.AddWithValue("@bId", bId);
 
                 cmd2.ExecuteNonQuery();
                 cmd3.ExecuteNonQuery();
