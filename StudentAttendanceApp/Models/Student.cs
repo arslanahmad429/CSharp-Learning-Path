@@ -1,5 +1,3 @@
-using System;
-
 namespace StudentAttendanceApp.Models
 {
     public class Student

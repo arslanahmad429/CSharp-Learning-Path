@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +8,7 @@ namespace StudentAttendanceApp.Controllers
 {
     public class StudentController : Controller
     {
-        private StudentRepository repo = new StudentRepository();
+        StudentRepository repo = new StudentRepository();
 
         public async Task<IActionResult> Index()
         {
