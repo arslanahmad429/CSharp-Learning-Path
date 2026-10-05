@@ -1,0 +1,24 @@
+@model StudentAttendanceApp.Models.Student
+
+<h2>Edit Student</h2>
+
+<form action="/Student/Edit" method="post">
+    <input type="hidden" name="StudentId" value="@Model.StudentId" />
+    
+    <label>Name:</label><br />
+    <input type="text" name="StudentName" value="@Model.StudentName" /><br /><br />
+    
+    <label>Registration Number:</label><br />
+    <input type="text" name="RegistrationNumber" value="@Model.RegistrationNumber" /><br /><br />
+    
+    <label>Department:</label><br />
+    <input type="text" name="Department" value="@Model.Department" /><br /><br />
+    
+    <label>Attendance Percentage:</label><br />
+    <input type="text" name="AttendancePercentage" value="@Model.AttendancePercentage" /><br /><br />
+    
+    <input type="submit" value="Update" />
+</form>
+
+<br />
+<a href="/Student/Index">Back</a>
