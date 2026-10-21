@@ -1,39 +1,49 @@
 @{
-    ViewData["Title"] = "Register for Event";
+    ViewData["Title"] = "Event Registration";
 }
 
 <div class="container mt-4">
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            @if (ViewBag.Confirmation != null)
+            {
+                <div class="alert alert-success mt-3" role="alert">
+                    <h5 class="alert-heading">Registration Confirmed</h5>
+                    <p>@ViewBag.Confirmation</p>
+                </div>
+                <a href="/Event/Index" class="btn btn-primary mt-2">Back to Events</a>
+            }
+            else
+            {
+                <h3>Register for Event</h3>
+                <p class="text-muted">Registering for: <strong>@ViewBag.EventTitle</strong></p>
 
-    @if (ViewBag.Confirmation != null)
-    {
-        <div class="alert alert-success">
-            @ViewBag.Confirmation
-        </div>
-        <a href="/Event" class="btn btn-primary">Back to Events</a>
-    }
-    else
-    {
-        <h2>Register for @ViewBag.EventTitle</h2>
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @ViewBag.Error
+                    </div>
+                }
 
-        <div class="row">
-            <div class="col-sm-12 col-md-6">
                 <form action="/Event/Register" method="post">
                     <input type="hidden" name="eventTitle" value="@ViewBag.EventTitle" />
+
                     <div class="mb-3">
-                        <label class="form-label">Your Name</label>
-                        <input type="text" name="studentName" class="form-control" />
+                        <label class="form-label">Full Name</label>
+                        <input type="text" name="studentName" class="form-control" placeholder="Enter your full name" required />
                     </div>
+
                     <div class="mb-3">
                         <label class="form-label">Email Address</label>
-                        <input type="email" name="studentEmail" class="form-control" />
+                        <input type="email" name="studentEmail" class="form-control" placeholder="e.g. rollno@pucit.edu.pk" required />
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-primary">Submit Registration</button>
+                        <a href="/Event/Index" class="btn btn-secondary ms-2">Cancel</a>
+                    </div>
                 </form>
-            </div>
+            }
         </div>
-
-        <br />
-        <a href="/Event">Back to Events</a>
-    }
-
+    </div>
 </div>

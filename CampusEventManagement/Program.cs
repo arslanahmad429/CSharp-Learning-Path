@@ -11,15 +11,14 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+
 app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapStaticAssets();
-
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Event}/{action=Index}/{id?}")
-    .WithStaticAssets();
+    pattern: "{controller=Event}/{action=Index}/{id?}");
 
 app.Run();

@@ -1,38 +1,60 @@
 @model List<CampusEventManagement.Models.Event>
 
 @{
-    ViewData["Title"] = "Events";
+    ViewData["Title"] = "Campus Events";
 }
 
 <div class="container mt-4">
-    <h2>@ViewBag.Heading</h2>
-    <p class="text-muted">@ViewData["Message"]</p>
+    <div class="row mb-3">
+        <div class="col-sm-12 col-md-8">
+            <h2>@ViewBag.Heading</h2>
+            <p class="text-secondary">@ViewData["Message"]</p>
+        </div>
+        <div class="col-sm-12 col-md-4 text-md-end text-sm-start mb-2">
+            <a href="/Event/Add" class="btn btn-success">+ Add New Event</a>
+        </div>
+    </div>
 
-    <a href="/Event/Add" class="btn btn-success mb-3">Add New Event</a>
-
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Category</th>
-                <th>Date</th>
-                <th>Venue</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var ev in Model)
-            {
-                <tr>
-                    <td>@ev.Title</td>
-                    <td>@ev.Category</td>
-                    <td>@ev.Date.ToShortDateString()</td>
-                    <td>@ev.Venue</td>
-                    <td>
-                        <a href="/Event/Register?id=@ev.Id&title=@ev.Title" class="btn btn-primary btn-sm">Register</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Date</th>
+                            <th>Venue</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Count > 0)
+                        {
+                            @foreach (var ev in Model)
+                            {
+                                <tr>
+                                    <td>@ev.Title</td>
+                                    <td>
+                                        <span class="badge bg-info text-dark">@ev.Category</span>
+                                    </td>
+                                    <td>@ev.Date.ToString("yyyy-MM-dd")</td>
+                                    <td>@ev.Venue</td>
+                                    <td>
+                                        <a href="/Event/Register?id=@ev.Id&title=@ev.Title" class="btn btn-primary btn-sm">Register</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center text-muted">No events found. Click 'Add New Event' to create one.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>

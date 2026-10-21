@@ -7,39 +7,47 @@ namespace CampusEventManagement.Repositories
 {
     public class EventRepository
     {
-        string connStr = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=EventDB;Integrated Security=True;";
+        string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=EventDB;Integrated Security=True;TrustServerCertificate=True;";
 
         public List<Event> GetAllEvents()
         {
-            List<Event> list = new List<Event>();
-            SqlConnection con = new SqlConnection(connStr);
-            string q = "SELECT * FROM Events";
-            SqlCommand cmd = new SqlCommand(q, con);
+            List<Event> events = new List<Event>();
+
+            SqlConnection con = new SqlConnection(connectionString);
+            string query = "SELECT Id, Title, Category, Date, Venue FROM Events";
+            SqlCommand cmd = new SqlCommand(query, con);
+
             con.Open();
-            SqlDataReader r = cmd.ExecuteReader();
-            while (r.Read())
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
             {
-                Event ev = new Event();
-                ev.Id = Convert.ToInt32(r["Id"]);
-                ev.Title = r["Title"].ToString();
-                ev.Category = r["Category"].ToString();
-                ev.Date = Convert.ToDateTime(r["Date"]);
-                ev.Venue = r["Venue"].ToString();
-                list.Add(ev);
+                Event item = new Event();
+                item.Id = Convert.ToInt32(reader["Id"]);
+                item.Title = reader["Title"].ToString();
+                item.Category = reader["Category"].ToString();
+                item.Date = Convert.ToDateTime(reader["Date"]);
+                item.Venue = reader["Venue"].ToString();
+
+                events.Add(item);
             }
+
             con.Close();
-            return list;
+
+            return events;
         }
 
         public void AddEvent(Event ev)
         {
-            SqlConnection con = new SqlConnection(connStr);
-            string q = "INSERT INTO Events (Title, Category, Date, Venue) VALUES (@t, @c, @d, @v)";
-            SqlCommand cmd = new SqlCommand(q, con);
-            cmd.Parameters.AddWithValue("@t", ev.Title);
-            cmd.Parameters.AddWithValue("@c", ev.Category);
-            cmd.Parameters.AddWithValue("@d", ev.Date);
-            cmd.Parameters.AddWithValue("@v", ev.Venue);
+            SqlConnection con = new SqlConnection(connectionString);
+            string query = "INSERT INTO Events (Title, Category, Date, Venue) VALUES (@Title, @Category, @Date, @Venue)";
+            SqlCommand cmd = new SqlCommand(query, con);
+
+            cmd.Parameters.AddWithValue("@Title", ev.Title);
+            cmd.Parameters.AddWithValue("@Category", ev.Category);
+            cmd.Parameters.AddWithValue("@Date", ev.Date);
+            cmd.Parameters.AddWithValue("@Venue", ev.Venue);
+
             con.Open();
             cmd.ExecuteNonQuery();
             con.Close();

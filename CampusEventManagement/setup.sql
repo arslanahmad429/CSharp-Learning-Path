@@ -4,7 +4,7 @@ USE EventDB;
 GO
 
 CREATE TABLE Events (
-    Id INT PRIMARY KEY IDENTITY,
+    Id INT PRIMARY KEY IDENTITY(1,1),
     Title NVARCHAR(100),
     Category NVARCHAR(50),
     Date DATETIME,
