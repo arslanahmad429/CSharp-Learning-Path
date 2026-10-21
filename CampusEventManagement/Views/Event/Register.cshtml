@@ -1,0 +1,39 @@
+@{
+    ViewData["Title"] = "Register for Event";
+}
+
+<div class="container mt-4">
+
+    @if (ViewBag.Confirmation != null)
+    {
+        <div class="alert alert-success">
+            @ViewBag.Confirmation
+        </div>
+        <a href="/Event" class="btn btn-primary">Back to Events</a>
+    }
+    else
+    {
+        <h2>Register for @ViewBag.EventTitle</h2>
+
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <form action="/Event/Register" method="post">
+                    <input type="hidden" name="eventTitle" value="@ViewBag.EventTitle" />
+                    <div class="mb-3">
+                        <label class="form-label">Your Name</label>
+                        <input type="text" name="studentName" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" name="studentEmail" class="form-control" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+
+        <br />
+        <a href="/Event">Back to Events</a>
+    }
+
+</div>

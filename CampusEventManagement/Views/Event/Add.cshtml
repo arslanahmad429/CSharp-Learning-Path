@@ -1,0 +1,34 @@
+@{
+    ViewData["Title"] = "Add Event";
+}
+
+<div class="container mt-4">
+    <h2>Add New Event</h2>
+
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            <form action="/Event/Add" method="post">
+                <div class="mb-3">
+                    <label class="form-label">Title</label>
+                    <input type="text" name="title" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Category</label>
+                    <input type="text" name="category" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Date</label>
+                    <input type="date" name="date" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Venue</label>
+                    <input type="text" name="venue" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-success">Add Event</button>
+            </form>
+        </div>
+    </div>
+
+    <br />
+    <a href="/Event">Back to Events</a>
+</div>

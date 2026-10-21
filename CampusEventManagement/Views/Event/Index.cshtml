@@ -1,0 +1,38 @@
+@model List<CampusEventManagement.Models.Event>
+
+@{
+    ViewData["Title"] = "Events";
+}
+
+<div class="container mt-4">
+    <h2>@ViewBag.Heading</h2>
+    <p class="text-muted">@ViewData["Message"]</p>
+
+    <a href="/Event/Add" class="btn btn-success mb-3">Add New Event</a>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Venue</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ev in Model)
+            {
+                <tr>
+                    <td>@ev.Title</td>
+                    <td>@ev.Category</td>
+                    <td>@ev.Date.ToShortDateString()</td>
+                    <td>@ev.Venue</td>
+                    <td>
+                        <a href="/Event/Register?id=@ev.Id&title=@ev.Title" class="btn btn-primary btn-sm">Register</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
